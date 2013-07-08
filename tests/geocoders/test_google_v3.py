@@ -93,3 +93,13 @@ class GoogleV3GeoCoderTestCaseUsingGenTest(AsyncTestCase):
             expect(err).to_have_an_error_message_of("Please use tornado_geopy.geocoders.BoundingBox to specify a bounding box.")
         else:
             assert False, "Should not have gotten this far"
+
+    #@gen_test
+    #def test_geocoding_with_key(self):
+        #g = GoogleV3(io_loop=self.io_loop, key="AIzaSyB0B_dU8N3AdI00Kc1vuBu7o2Rnn2k3_Hs")
+        #results = yield g.geocode(u"10900 Euclid Ave in Cleveland")
+        #expect(results).to_length(1)
+        #place, (lat, lng) = results[0]
+        #expect(place).to_equal(u"10900 Euclid Avenue, Cleveland, OH 44106, USA")
+        #expect(lat).to_equal(41.5072596)
+        #expect(lng).to_equal(-81.6070113)

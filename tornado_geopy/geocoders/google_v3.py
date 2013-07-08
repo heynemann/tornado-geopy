@@ -32,8 +32,9 @@ class BoundingBox(object):
 
 
 class GoogleV3(GeoPyGeoCoder):
-    def __init__(self, io_loop=None, *args, **kw):
-        super(GoogleV3, self).__init__(*args, **kw)
+    def __init__(self, io_loop=None, domain='maps.googleapis.com', protocol='http',
+                 client_id=None, secret_key=None):
+        super(GoogleV3, self).__init__(domain, protocol, client_id, secret_key)
         self.io_loop = io_loop or IOLoop.instance()
         self.client = AsyncHTTPClient(self.io_loop)
 
