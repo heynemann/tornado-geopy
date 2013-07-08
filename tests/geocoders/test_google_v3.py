@@ -65,3 +65,19 @@ class GoogleV3GeoCoderTestCaseUsingGenTest(AsyncTestCase):
         expect(place).to_equal(u"Avenida Rio Branco, Rio de Janeiro, Brazil")
         expect(lat).to_equal(-22.9049854)
         expect(lng).to_equal(-43.1777056)
+
+    @gen_test
+    def test_can_geocode_address_in_portuguese(self):
+        g = GoogleV3(io_loop=self.io_loop)
+        west = -22.917274
+        south = -43.186623
+        east = -22.906078
+        north = -43.162494
+        box = BoundingBox((west, south), (east, north))
+        results = yield g.geocode(u"Avenida Rio Branco", bounds=box, language="pt-BR")
+        expect(results).to_length(1)
+
+        place, (lat, lng) = results[0]
+        expect(place).to_equal(u"Avenida Rio Branco, Rio de Janeiro, República Federativa do Brasil")
+        expect(lat).to_equal(-22.9049854)
+        expect(lng).to_equal(-43.1777056)
