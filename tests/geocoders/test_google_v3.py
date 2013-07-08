@@ -42,8 +42,13 @@ class GoogleV3GeoCoderTestCaseUsingGenTest(AsyncTestCase):
     @gen_test
     def test_can_geocode_address_with_region(self):
         g = GoogleV3(io_loop=self.io_loop)
-        results = yield g.geocode(u"Avenida Rio Branco", region="BR")
-        expect(results).to_length(10)
+        results = yield g.geocode(u"Toledo", region="ES")
+        expect(results).to_length(1)
+
+        place, (lat, lng) = results[0]
+        expect(place).to_equal(u"Toledo, Spain")
+        expect(lat).to_equal(39.8628316)
+        expect(lng).to_equal(-4.027323099999999)
 
     @gen_test
     def test_can_geocode_address_with_bounds(self):
