@@ -8,6 +8,8 @@
 # http://www.opensource.org/licenses/mit-license
 # Copyright (c) 2013 Bernardo Heynemann heynemann@gmail.com
 
+import sys
+
 from tornado.testing import AsyncTestCase, gen_test
 from preggy import expect
 
@@ -81,3 +83,13 @@ class GoogleV3GeoCoderTestCaseUsingGenTest(AsyncTestCase):
         expect(place).to_equal(u"Avenida Rio Branco, Rio de Janeiro, República Federativa do Brasil")
         expect(lat).to_equal(-22.9049854)
         expect(lng).to_equal(-43.1777056)
+
+    def test_geocoding_with_invalid_bounding_fails(self):
+        g = GoogleV3(io_loop=self.io_loop)
+        try:
+            g.geocode(u"Avenida Rio Branco", bounds="whatever")
+        except ValueError:
+            err = sys.exc_info()[1]
+            expect(err).to_have_an_error_message_of("Please use tornado_geopy.geocoders.BoundingBox to specify a bounding box.")
+        else:
+            assert False, "Should not have gotten this far"
